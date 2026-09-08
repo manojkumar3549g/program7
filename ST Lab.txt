@@ -1,0 +1,301 @@
+---------------------------------------------------------------------------------------------------------------------------
+PROGRAM 10 : 
+
+package selenium;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class program10 {
+
+    // Method to handle all locators with Dynamic Wait
+    public static WebElement getElement(WebDriver driver, String locatorType, String locatorValue) {
+
+        By by = null;
+
+        switch(locatorType.toLowerCase()) {
+
+            case "id":
+                by = By.id(locatorValue);
+                break;
+
+            case "name":
+                by = By.name(locatorValue);
+                break;
+
+            case "classname":
+                by = By.className(locatorValue);
+                break;
+
+            case "tagname":
+                by = By.tagName(locatorValue);
+                break;
+
+            case "linktext":
+                by = By.linkText(locatorValue);
+                break;
+
+            case "partiallinktext":
+                by = By.partialLinkText(locatorValue);
+                break;
+
+            case "css":
+            case "cssselector":
+                by = By.cssSelector(locatorValue);
+                break;
+
+            case "xpath":
+                by = By.xpath(locatorValue);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid Locator Type");
+        }
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
+        driver.get("https://www.google.com");
+
+        WebElement searchBox = getElement(driver, "name", "q");
+
+        System.out.println("WebElement Returned Successfully");
+        System.out.println("Tag Name : " + searchBox.getTagName());
+
+        searchBox.sendKeys("Selenium");
+
+        driver.quit();
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+PROGRAM 11 : 
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+public class program11 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		 // Create Firefox WebDriver object
+        WebDriver driver = new FirefoxDriver();
+
+        // Open a website
+        driver.get("https://www.google.com");
+
+        // Print page title
+        System.out.println("Page Title: " + driver.getTitle());
+
+        // Close the browser
+        driver.quit();
+
+	}
+
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------
+PROGRAM 12 : 
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program12 {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // Launch Chrome browser
+        WebDriver driver = new ChromeDriver();
+
+        // Open the website
+        driver.get("https://www.amazon.com");
+
+        // Check whether the website is opened
+        if (driver.getTitle().contains("Amazon")) {
+            System.out.println("Website is opened successfully");
+        } else {
+            System.out.println("Website failed to open");
+        }
+
+        // Wait for 5 seconds
+        Thread.sleep(5000);
+
+        // Close the browser
+        driver.quit();
+
+        System.out.println("Browser closed successfully");
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+PROGRAM 13 : 
+
+
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program13 {
+
+    public static void main(String[] args) {
+
+        // Launch Chrome
+        WebDriver driver = new ChromeDriver();
+
+        // Open file upload website
+        driver.get("https://the-internet.herokuapp.com/upload");
+
+        // Upload the file
+        driver.findElement(By.id("file-upload"))
+              .sendKeys("C:\\Users\\Manoj\\Desktop\\sample.txt");
+
+        // Click the Upload button
+        driver.findElement(By.id("file-submit")).click();
+
+        // Check whether the file was uploaded
+        String message = driver.findElement(By.tagName("h3")).getText();
+
+        if (message.equals("File Uploaded!")) {
+            System.out.println("File uploaded successfully");
+        } else {
+            System.out.println("File upload failed");
+        }
+
+        // Close the browser
+        driver.quit();
+    }
+}
+
+
+--------------------------------------------------------------------------------------------------------------
+
+PROGRAM 14 : 
+
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program14 {
+
+    public static void main(String[] args) {
+
+        // Launch Chrome browser
+        WebDriver driver = new ChromeDriver();
+
+        // Open the website
+        driver.get("https://the-internet.herokuapp.com/");
+
+        // Access link using linkText()
+        driver.findElement(By.linkText("A/B Testing")).click();
+
+        // Check whether A/B Testing page opened
+        if (driver.getCurrentUrl().contains("/abtest")) {
+            System.out.println("A/B Testing link opened successfully");
+        } else {
+            System.out.println("A/B Testing link failed");
+        }
+
+        // Go back to the previous page
+        driver.navigate().back();
+
+        // Access link using partialLinkText()
+        driver.findElement(By.partialLinkText("Form")).click();
+
+        // Check whether Form Authentication page opened
+        if (driver.getCurrentUrl().contains("/login")) {
+            System.out.println("Form Authentication link opened successfully");
+        } else {
+            System.out.println("Form Authentication link failed");
+        }
+
+        // Close the browser
+        driver.quit();
+
+        System.out.println("Browser closed successfully");
+    }
+}
+
+---------------------------------------------------------------------------------------------------------
+
+PROGRAM 15 : 
+
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class program15 {
+
+    public static void main(String[] args) {
+
+        // Launch Edge browser
+        WebDriver driver = new EdgeDriver();
+
+        // Open the Selenium form page
+        driver.get("https://www.selenium.dev/selenium/web/formPage.html");
+
+        // Locate the multi-select dropdown
+        Select dropdown = new Select(
+                driver.findElement(By.name("multi-select"))
+        );
+
+        // Check whether dropdown supports multiple selection
+        if (dropdown.isMultiple()) {
+
+            // Select multiple items by index
+            dropdown.selectByIndex(0);
+            dropdown.selectByIndex(1);
+
+            // Get selected items
+            java.util.List<WebElement> selectedItems =
+                    dropdown.getAllSelectedOptions();
+
+            // Check whether multiple items are selected
+            if (selectedItems.size() == 2) {
+                System.out.println("Multiple items selected successfully");
+            } else {
+                System.out.println("Multiple items selection failed");
+            }
+
+        } else {
+            System.out.println("Dropdown does not support multiple selection");
+        }
+
+        // Close browser
+        driver.quit();
+
+        System.out.println("Browser closed successfully");
+    }
+}
+-----------------------------------------------------------------------------------------------------------------
+
