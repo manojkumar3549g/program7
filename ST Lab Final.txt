@@ -1,0 +1,940 @@
+1. Write a script to open google.com and verify that title is Google and verify that
+it is redirected to google.co.in
+
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program1 {
+
+public static void main(String[] args) {
+
+
+WebDriver driver = new ChromeDriver();
+
+        driver.get("https://www.google.com");
+
+        String Title = driver.getTitle();
+
+        if (Title.contains("google")) {
+
+            System.out.println("Title Verification Passed");
+
+        } else {
+
+            System.out.println("Title Verification Failed");
+
+        }
+
+        String currentUrl = driver.getCurrentUrl();
+
+        if (currentUrl.contains("google.com")) {
+
+            System.out.println("Redirected to google.com - Passed");
+
+        } else {
+
+            System.out.println("Redirected URL: " + currentUrl);
+
+            System.out.println("Redirection Verification Failed");
+
+        }
+
+        driver.quit();
+
+}
+
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+2. Write a script to open google.co.in using chrome browser (Chrome Driver)
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program2 {
+
+public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://www.google.com");
+
+        System.out.println(driver.getTitle() + " opened successfully");
+
+        driver.quit();
+
+}
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+3. Write a script to open google.co.in using internet explorer (Internet Explorer
+Driver).
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class program3 {
+
+public static void main(String[] args) {
+
+        WebDriver driver = new EdgeDriver();
+
+        driver.get("https://www.google.com");
+
+        driver.manage().window().maximize();
+
+        System.out.println("Title: " + driver.getTitle());
+
+        System.out.println("Title: " + driver.getTitle());
+
+        driver.quit();
+
+}
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+4. Write a script to create browser instance based on browser name
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class program4 {
+
+public static void main(String[] args) {
+
+WebDriver driver = new ChromeDriver();  
+
+         driver = new ChromeDriver();  
+
+        // Open website
+
+        driver.get("https://www.google.com");
+
+        // Print title
+
+        System.out.println("Page Title: " + driver.getTitle());
+
+        System.out.println("Chrome Opened Successfully");
+
+        driver.quit();
+        WebDriver driver1 = new EdgeDriver();
+
+        driver1.get("https://www.google.com");
+
+        driver1.manage().window().maximize();
+
+        System.out.println("Title: " + driver1.getTitle());
+       System.out.println("Edge Opened Successfully");
+        driver1.quit();
+
+}
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+
+5. Write a script to search for specified option in the listbox
+
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class program5 {
+
+public static void main(String[] args) {
+
+WebDriver driver = new ChromeDriver();
+     driver.get("https://demoqa.com/select-menu");
+
+        driver.manage().window().maximize();
+
+        WebElement listBox = driver.findElement(By.id("oldSelectMenu"));
+
+        Select select = new Select(listBox);
+
+        String searchOption = "Purple"; 
+
+        boolean found = false;
+        for (WebElement option : select.getOptions()) {
+            if (option.getText().equalsIgnoreCase(searchOption)) {
+                found = true;
+                option.click();   
+                System.out.println(searchOption + " found and selected.");
+
+                break;
+
+            }
+        }
+
+        if (!found) {
+            System.out.println(searchOption + " not found in the list box.");
+
+        }
+        driver.quit();
+}
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+6. Write a script to print the content of list in sorted order
+
+package selenium;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class program6 {
+public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demoqa.com/select-menu");
+        driver.manage().window().maximize();
+        WebElement dropdown = driver.findElement(By.id("oldSelectMenu"));
+        Select select = new Select(dropdown);
+        List<WebElement> options = select.getOptions();
+        ArrayList<String> colors = new ArrayList<>();
+        for (WebElement option : options) {
+            colors.add(option.getText());
+        }
+        Collections.sort(colors);
+        System.out.println("Contents of the list in sorted order:");
+        for (String color : colors) {
+            System.out.println(color);
+        }
+
+        driver.quit();
+
+}
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+7. Write a script to print all the options. For duplicates add entry only once. Use
+HashSet
+
+package selenium;
+
+
+
+import java.util.HashSet;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class program7 {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver(); driver.get("https://manojkumar3549g.github.io/duplicate-dropdown/");
+        driver.manage().window().maximize();
+        WebElement dropdown = driver.findElement(By.id("country"));
+
+        Select select = new Select(dropdown);
+        List<WebElement> options = select.getOptions();
+        HashSet<String> uniqueOptions = new HashSet<>();
+
+        for (WebElement option : options) {
+            uniqueOptions.add(option.getText());
+        }
+        System.out.println("Unique Options in the List Box:");
+        for (String option : uniqueOptions) {
+            System.out.println(option);
+        }
+        driver.quit();       
+
+    }
+}
+
+
+---------------------------------------------------------------------------------------------------------------
+
+8. Write a script to close all the browsers without using quit() method.
+
+package selenium;
+
+
+
+
+
+import java.util.Set;
+
+
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program7 {
+
+
+
+    public static void main(String[] args) throws InterruptedException {
+
+
+
+        // Launch browser
+
+        WebDriver driver = new ChromeDriver();
+
+
+
+        // Open first website
+
+        driver.get("https://www.google.com");
+
+
+
+        // Open second window
+
+        driver.switchTo().newWindow(org.openqa.selenium.WindowType.WINDOW);
+
+        driver.get("https://www.amazon.in");
+
+
+
+        // Open third window
+
+        driver.switchTo().newWindow(org.openqa.selenium.WindowType.WINDOW);
+
+        driver.get("https://www.flipkart.com");
+
+
+
+        // Get all window handles
+
+        Set<String> windows = driver.getWindowHandles();
+
+
+
+        // Close each browser window
+
+        for (String window : windows) {
+
+            driver.switchTo().window(window);
+
+            driver.close();
+
+        }
+
+    }
+
+}
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+9.Write a script to handle all locators and return web element for any locator
+
+package selenium;
+
+
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+
+public class program9 {
+
+
+
+    public static WebElement getElement(WebDriver driver, String locatorType, String locatorValue) {
+
+
+
+        By by;
+
+
+
+        switch(locatorType.toLowerCase()) {
+
+
+
+            case "id":
+
+                by = By.id(locatorValue);
+
+                break;
+
+
+
+            case "name":
+
+                by = By.name(locatorValue);
+
+                break;
+
+
+
+            case "classname":
+
+                by = By.className(locatorValue);
+
+                break;
+
+
+
+            case "tagname":
+
+                by = By.tagName(locatorValue);
+
+                break;
+
+
+
+            case "linktext":
+
+                by = By.linkText(locatorValue);
+
+                break;
+
+
+
+            case "partiallinktext":
+
+                by = By.partialLinkText(locatorValue);
+
+                break;
+
+
+
+            case "css":
+
+            case "cssselector":
+
+                by = By.cssSelector(locatorValue);
+
+                break;
+
+
+
+            case "xpath":
+
+                by = By.xpath(locatorValue);
+
+                break;
+
+
+
+            default:
+
+                throw new IllegalArgumentException("Invalid Locator Type");
+
+        }
+
+
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+
+
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+
+    }
+
+    
+
+    public static void main(String[] args) {
+
+
+
+        WebDriver driver = new ChromeDriver();
+
+
+
+        driver.manage().window().maximize();
+
+
+
+        driver.get("https://www.amazon.com");
+
+
+
+        WebElement searchBox = getElement(driver, "id", "twotabsearchtextbox");
+
+
+
+        System.out.println("WebElement Returned Successfully");
+
+        System.out.println("Tag Name : " + searchBox.getTagName());
+
+        System.out.println("Element ID : " + searchBox.getAttribute("id"));
+
+
+
+        searchBox.sendKeys("Laptop");
+
+
+
+        WebElement searchButton = getElement(driver, "id", "nav-search-submit-button");
+
+        searchButton.click();
+
+
+
+        driver.quit();
+
+    }
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+10. Write a script to handle all locators containing dynamic wait and return web
+element for any locator
+
+
+package selenium;
+
+
+
+import java.time.Duration;
+
+
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+
+public class program10 {
+
+
+
+    // Method to handle all locators with Dynamic Wait
+
+    public static WebElement getElement(WebDriver driver, String locatorType, String locatorValue) {
+
+
+
+        By by = null;
+
+
+
+        switch(locatorType.toLowerCase()) {
+
+
+
+            case "id":
+
+                by = By.id(locatorValue);
+
+                break;
+
+
+
+            case "name":
+
+                by = By.name(locatorValue);
+
+                break;
+
+
+
+            case "classname":
+
+                by = By.className(locatorValue);
+
+                break;
+
+
+
+            case "tagname":
+
+                by = By.tagName(locatorValue);
+
+                break;
+
+
+
+            case "linktext":
+
+                by = By.linkText(locatorValue);
+
+                break;
+
+
+
+            case "partiallinktext":
+
+                by = By.partialLinkText(locatorValue);
+
+                break;
+
+
+
+            case "css":
+
+            case "cssselector":
+
+                by = By.cssSelector(locatorValue);
+
+                break;
+
+
+
+            case "xpath":
+
+                by = By.xpath(locatorValue);
+
+                break;
+
+
+
+            default:
+
+                throw new IllegalArgumentException("Invalid Locator Type");
+
+        }
+
+
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+
+
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+
+    }
+
+
+
+    public static void main(String[] args) {
+
+
+
+        WebDriver driver = new ChromeDriver();
+
+
+
+        driver.manage().window().maximize();
+
+
+
+        driver.get("https://www.google.com");
+
+
+
+        WebElement searchBox = getElement(driver, "name", "q");
+
+
+
+        System.out.println("WebElement Returned Successfully");
+
+        System.out.println("Tag Name : " + searchBox.getTagName());
+
+
+
+        searchBox.sendKeys("Selenium");
+
+
+
+        driver.quit();
+
+    }
+
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+11. Write a script to open a Firefox browser using selenium web driver.
+
+package selenium;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class FirefoxBrowser {
+
+    public static void main(String[] args) {
+
+        // Create Firefox WebDriver object
+        WebDriver driver = new FirefoxDriver();
+
+        // Open a website
+        driver.get("https://www.google.com");
+
+        // Print page title
+        System.out.println("Page Title: " + driver.getTitle());
+
+        // Close the browser
+        driver.quit();
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+12. Write a script to print a message to display that the website is opened
+successfully wait for 5 seconds and close the browser.
+
+
+package selenium;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class FirefoxTest {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // Launch Firefox browser
+        WebDriver driver = new FirefoxDriver();
+
+        // Open the website
+        driver.get("https://www.google.com");
+
+        // Display success message
+        System.out.println("Website is opened successfully");
+
+        // Wait for 5 seconds
+        Thread.sleep(5000);
+
+        // Close the browser
+        driver.quit();
+
+        System.out.println("Browser closed successfully");
+    }
+}
+
+
+---------------------------------------------------------------------------------------------------------------
+13. Write a script to upload a file with send keys method by using web driver
+
+
+package selenium;
+mport org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class FileUpload {
+
+    public static void main(String[] args) {
+
+        // Launch Firefox
+        WebDriver driver = new FirefoxDriver();
+
+        // Open file upload website
+        driver.get("https://the-internet.herokuapp.com/upload");
+
+        // Locate the file upload element and upload the file
+        driver.findElement(By.id("file-upload"))
+              .sendKeys("C:\\Users\\Manoj\\Desktop\\sample.txt");
+
+        // Click the Upload button
+        driver.findElement(By.id("file-submit")).click();
+
+        // Display success message
+        System.out.println("File uploaded successfully");
+
+        // Close the browser
+        driver.quit();
+    }
+}
+---------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------
+14.Write a script to access a link in selenium web driver by linktext() and
+partialLinktext()
+
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class program14 {
+
+    public static void main(String[] args) {
+
+        // Launch Chrome browser
+        WebDriver driver = new ChromeDriver();
+
+        // Open the website
+        driver.get("https://the-internet.herokuapp.com/");
+
+        // Access link using linkText()
+        driver.findElement(By.linkText("A/B Testing")).click();
+
+        // Check whether A/B Testing page opened
+        if (driver.getCurrentUrl().contains("/abtest")) {
+            System.out.println("A/B Testing link opened successfully");
+        } else {
+            System.out.println("A/B Testing link failed");
+        }
+
+        // Go back to the previous page
+        driver.navigate().back();
+
+        // Access link using partialLinkText()
+        driver.findElement(By.partialLinkText("Form")).click();
+
+        // Check whether Form Authentication page opened
+        if (driver.getCurrentUrl().contains("/login")) {
+            System.out.println("Form Authentication link opened successfully");
+        } else {
+            System.out.println("Form Authentication link failed");
+        }
+
+        // Close the browser
+        driver.quit();
+
+        System.out.println("Browser closed successfully");
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------
+15. Write a script to Locate a Link by Selecting Multiple Items in a Dropdown
+
+package selenium;
+
+
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.edge.EdgeDriver;
+
+import org.openqa.selenium.support.ui.Select;
+
+
+
+public class program15 {
+
+
+
+    public static void main(String[] args) {
+
+
+
+        // Launch Edge browser
+
+        WebDriver driver = new EdgeDriver();
+
+
+
+        // Open the Selenium form page
+
+        driver.get("https://www.selenium.dev/selenium/web/formPage.html");
+
+
+
+        // Locate the multi-select dropdown
+
+        Select dropdown = new Select(
+
+                driver.findElement(By.name("multi-select"))
+
+        );
+
+
+
+        // Check whether dropdown supports multiple selection
+
+        if (dropdown.isMultiple()) {
+
+
+
+            // Select multiple items by index
+
+            dropdown.selectByIndex(0);
+
+            dropdown.selectByIndex(1);
+
+
+
+            // Get selected items
+
+            java.util.List<WebElement> selectedItems =
+
+                    dropdown.getAllSelectedOptions();
+
+
+
+            // Check whether multiple items are selected
+
+            if (selectedItems.size() == 2) {
+
+                System.out.println("Multiple items selected successfully");
+
+            } else {
+
+                System.out.println("Multiple items selection failed");
+
+            }
+
+
+
+        } else {
+
+            System.out.println("Dropdown does not support multiple selection");
+
+        }
+
+
+
+        // Close browser
+
+        driver.quit();
+
+
+
+        System.out.println("Browser closed successfully");
+
+    }
+
+}
+
+
+---------------------------------------------------------------------------------------------------------------
